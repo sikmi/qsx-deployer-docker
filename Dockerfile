@@ -23,3 +23,11 @@ RUN set -ex \
     && n 6.1.0 \
     && apt-get purge -y nodejs \
     && rm -rf /var/lib/apt/lists/*
+
+RUN set -ex \
+    && apt-get update  \
+    && apt-get install -y \
+                    mysql-client \
+                    --no-install-recommends  \
+    && rm -rf /var/lib/apt/lists/*
+
