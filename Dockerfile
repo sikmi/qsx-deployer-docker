@@ -1,17 +1,16 @@
 FROM sikmi/awseb-deployer-docker
 
 # ruby install
-RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz && \
-    tar -zxvf ruby-2.4.0.tar.gz && \
-    cd ruby-2.4.0 && \
+RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.4/ruby-2.4.3.tar.gz && \
+    tar -zxvf ruby-2.4.3.tar.gz && \
+    cd ruby-2.4.3 && \
     ./configure --disable-install-doc && \
     make && \
     make install && \
     cd .. && \
-    rm -r ruby-2.4.0 ruby-2.4.0.tar.gz
+    rm -r ruby-2.4.3 ruby-2.4.3.tar.gz
 
-RUN gem update --system
-RUN gem install bundler --force
+RUN gem install bundler
 
 # node install
 RUN set -ex \
