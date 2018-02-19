@@ -11,7 +11,7 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz && \
     rm -r ruby-2.4.0 ruby-2.4.0.tar.gz
 
 RUN gem update --system
-RUN gem install bundler
+RUN gem install bundler --force
 
 # node install
 RUN set -ex \
