@@ -24,6 +24,11 @@ RUN set -ex \
     && apt-get purge -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
+# rust install
+RUN set -ex \
+    && curl https://sh.rustup.rs -sSf | sh -s -- -y
+ENV PATH $PATH:~/.cargo/bin    
+
 RUN set -ex \
     && apt-get update  \
     && apt-get install -y \
