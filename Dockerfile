@@ -1,14 +1,14 @@
 FROM sikmi/awseb-deployer-docker
 
 # ruby install
-RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.4/ruby-2.4.3.tar.gz && \
-    tar -zxvf ruby-2.4.3.tar.gz && \
-    cd ruby-2.4.3 && \
+RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.5/ruby-2.5.3.tar.gz && \
+    tar -zxvf ruby-2.5.3.tar.gz && \
+    cd ruby-2.5.3 && \
     ./configure --disable-install-doc && \
     make && \
     make install && \
     cd .. && \
-    rm -r ruby-2.4.3 ruby-2.4.3.tar.gz
+    rm -r ruby-2.5.3 ruby-2.5.3.tar.gz
 
 RUN gem install bundler
 
@@ -16,8 +16,8 @@ RUN gem install bundler
 RUN set -ex \
     && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
     && DEBIAN_FRONTEND=noninteractive apt-get -y install \
-       nodejs \
-       --no-install-recommends \
+    nodejs \
+    --no-install-recommends \
     && npm cache clean \
     && npm install n -g \
     && n 6.1.0 \
@@ -32,7 +32,7 @@ ENV PATH $PATH:~/.cargo/bin
 RUN set -ex \
     && apt-get update  \
     && apt-get install -y \
-                    mysql-client \
-                    --no-install-recommends  \
+    mysql-client \
+    --no-install-recommends  \
     && rm -rf /var/lib/apt/lists/*
 
