@@ -27,7 +27,7 @@ RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.5/ruby-2.5.3.tar.gz && \
     cd .. && \
     rm -r ruby-2.5.3 ruby-2.5.3.tar.gz
 
-RUN gem install bundler
+RUN gem install bundler -v '1.17.3'
 
 # node install
 RUN set -ex \
