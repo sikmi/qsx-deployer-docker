@@ -5,7 +5,17 @@ RUN apt-get update && \
                     unzip \
                     jq \
                     --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
+                    # for chrome packages
+                    fonts-noto-cjk fonts-liberation libappindicator3-1 \
+                    libasound2 libnspr4 libxtst6 libnss3 libxss1 xdg-utils \
+                    --no-install-recommends && \
+                    wget -q https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifCJKjp-hinted.zip && \
+                    unzip NotoSerifCJKjp-hinted.zip -d /usr/share/fonts/opentype/noto && \
+                    rm NotoSerifCJKjp-hinted.zip && \
+                    chmod 644 /usr/share/fonts/opentype/noto/* && \
+                    rm -rf /var/lib/apt/lists/* && \
+                    curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+                    dpkg -i google-chrome-stable_current_amd64.deb
 
 RUN pip install awsebcli \
                 awscli
