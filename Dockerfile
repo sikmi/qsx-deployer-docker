@@ -4,7 +4,6 @@ RUN apt-get update && \
     apt-get install -y zip \
                     unzip \
                     jq \
-                    --no-install-recommends && \
                     # for chrome packages
                     fonts-noto-cjk fonts-liberation libappindicator3-1 \
                     libasound2 libnspr4 libxtst6 libnss3 libxss1 xdg-utils \
