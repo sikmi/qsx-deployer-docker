@@ -1,14 +1,16 @@
-FROM python:2.7.13
+FROM python:3.8.2-buster
 
 RUN apt-get update && \
     apt-get install -y zip \
                     unzip \
                     jq \
                     # for chrome packages
-                    fonts-noto-cjk fonts-liberation libappindicator3-1 \
-                    libasound2 libnspr4 libxtst6 libnss3 libxss1 xdg-utils \
+                    fonts-liberation libappindicator3-1 \
+                    libasound2 libnspr4 libxtst6 libnss3 xdg-utils \
+                    libdrm2 libgbm1 libx11-xcb1 libxcb-dri3-0 \
                     --no-install-recommends && \
                     wget -q https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifCJKjp-hinted.zip && \
+                    mkdir -p /usr/share/fonts/opentype/noto && \
                     unzip NotoSerifCJKjp-hinted.zip -d /usr/share/fonts/opentype/noto && \
                     rm NotoSerifCJKjp-hinted.zip && \
                     chmod 644 /usr/share/fonts/opentype/noto/* && \
@@ -27,24 +29,22 @@ RUN curl -L -o /tmp/docker-${DOCKER_VERSION}.tgz https://get.docker.com/builds/L
 RUN curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
 
 # ruby install
-RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.5/ruby-2.5.3.tar.gz && \
-    tar -zxvf ruby-2.5.3.tar.gz && \
-    cd ruby-2.5.3 && \
+RUN curl -O http://ftp.ruby-lang.org/pub/ruby/2.6/ruby-2.6.6.tar.gz && \
+    tar -zxvf ruby-2.6.6.tar.gz && \
+    cd ruby-2.6.6 && \
     ./configure --disable-install-doc && \
     make && \
     make install && \
     cd .. && \
-    rm -r ruby-2.5.3 ruby-2.5.3.tar.gz
-
-RUN gem install bundler -v '1.17.3'
+    rm -r ruby-2.6.6 ruby-2.6.6.tar.gz
 
 # node install
 RUN set -ex \
     && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
     && DEBIAN_FRONTEND=noninteractive apt-get -y install \
-       nodejs \
+       nodejs npm \
        --no-install-recommends \
-    && npm cache clean \
+    && npm cache clean --force \
     && npm install n -g \
     && n 6.1.0 \
     && apt-get purge -y nodejs \
@@ -58,7 +58,7 @@ ENV PATH $PATH:~/.cargo/bin
 RUN set -ex \
     && apt-get update  \
     && apt-get install -y \
-                    mysql-client \
+                    default-mysql-client \
                     --no-install-recommends  \
     && rm -rf /var/lib/apt/lists/*
 
